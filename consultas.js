@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const bcrypt = require('bcryptjs');
 
 const { Pool } = require('pg');
@@ -5,7 +7,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
     host: 'localhost',
     user: 'postgres',
-    password: 'Bgabriel441685',
+    password: process.env.PASS,
     database: 'softjobs',
     allowExitOnIdle: true
 });
