@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { verificarCredenciales, agregarUsuario, obtenerUsuario } = require('./consultas.js');
 
 const jwt = require('jsonwebtoken');
@@ -23,7 +25,7 @@ app.post("/login", async (req, res) => {
     try {
         const {email, password} = req.body;
         await verificarCredenciales(email, password);
-        const token = jwt.sign({ email }, "az_AZ");
+        const token = jwt.sign({ email }, process.env.SECRET_KEY);
         console.log(`Token generado para ${email}`);
         res.send(token);
     } catch(error) {
@@ -35,7 +37,7 @@ app.get("/usuarios", async (req, res) => {
     try {
         const Authorization = req.header("Authorization");
         const token = Authorization.split("Bearer ")[1];
-        jwt.verify(token, "az_AZ");
+        jwt.verify(token, process.env.SECRET_KEY);
         const { email } = jwt.decode(token);
         result = await obtenerUsuario(email);
         res.json(result);
