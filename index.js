@@ -35,8 +35,8 @@ app.get("/usuarios", async (req, res) => {
     try {
         const Authorization = req.header("Authorization");
         const token = Authorization.split("Bearer ")[1];
-        const datosToken = jwt.verify(token, "az_AZ");
-        const { email } = datosToken;
+        jwt.verify(token, "az_AZ");
+        const { email } = jwt.decode(token);
         result = await obtenerUsuario(email);
         res.json(result);
     } catch(error) {

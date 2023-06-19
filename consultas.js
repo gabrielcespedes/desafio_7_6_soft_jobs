@@ -37,7 +37,6 @@ const agregarUsuario = async (usuario) => {
 const verificarCredenciales = async (email, password) => {
     let usuario;
     let rowCount;
-
     const values = [email];
     const consulta = "SELECT * FROM usuarios WHERE email = $1";
 
@@ -54,7 +53,6 @@ const verificarCredenciales = async (email, password) => {
     }
 
     const { password: passwordEncriptada } = usuario;
-
     const passwordCorrecta = bcrypt.compareSync(password, passwordEncriptada);
 
     if (!passwordCorrecta || !rowCount) {
