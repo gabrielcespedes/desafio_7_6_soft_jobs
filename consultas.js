@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const { Pool } = require('pg');
 
+const { get_Users_Middleware } = require('./middleware/middleware.js');
+
 const pool = new Pool({
     host: 'localhost',
     user: 'postgres',

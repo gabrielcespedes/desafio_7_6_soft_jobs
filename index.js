@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const { verificarCredenciales, agregarUsuario, obtenerUsuario } = require('./consultas.js');
 
+const { get_Users_Middleware } = require('./middleware/middleware.js');
+
 const jwt = require('jsonwebtoken');
 
 const express = require('express');
@@ -33,12 +35,9 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.get("/usuarios", async (req, res) => {
+app.get("/usuarios", get_Users_Middleware, async (req, res) => {
     try {
-        const Authorization = req.header("Authorization");
-        const token = Authorization.split("Bearer ")[1];
-        jwt.verify(token, process.env.SECRET_KEY);
-        const { email } = jwt.decode(token);
+        const { email } = req.data;
         result = await obtenerUsuario(email);
         res.json(result);
     } catch(error) {
